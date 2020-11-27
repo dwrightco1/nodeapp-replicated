@@ -1,0 +1,18 @@
+# frontent service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeapp-service
+  #namespace: nodeapp-dev
+  labels:
+    component: nodeapp
+spec:
+  selector:
+    app: nodeapp
+    component: nodeapp
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 81
+  type: LoadBalancer

@@ -1,0 +1,46 @@
+# frontend deployment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodeapp
+  #namespace: nodeapp-dev
+  creationTimestamp: null
+  labels:
+    app: nodeapp
+    component: nodeapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodeapp
+      component: nodeapp
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nodeapp
+        component: nodeapp
+    spec:
+      containers:
+      - image: dyvantage01/nodeapp:1.1.6
+        name: nodeapp
+        resources:
+          limits:
+            memory: '256Mi'
+            cpu: '500m'
+          requests:
+            memory: '32Mi'
+            cpu: '100m'
+        env:
+          - name: NODEAPP_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: nodeapp-secrets
+                key: NODEAPP_DB_PASSWORD
+        ports:
+        - containerPort: 81
+        envFrom:
+        - configMapRef:
+            name: nodeapp-configmap
