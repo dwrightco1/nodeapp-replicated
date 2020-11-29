@@ -15,4 +15,4 @@ spec:
     - protocol: TCP
       port: 3000
       targetPort: 81
-  type: LoadBalancer
+  type: NodePort
