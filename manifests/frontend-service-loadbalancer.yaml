@@ -4,9 +4,10 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nodeapp-service
-  #namespace: nodeapp-dev
   labels:
     component: nodeapp
+  annotations:
+    kots.io/when: '{{repl ConfigOptionEquals "nodeapp_external_port_type" "Load-Balancer" }}'
 spec:
   selector:
     app: nodeapp
@@ -15,4 +16,4 @@ spec:
     - protocol: TCP
       port: 3000
       targetPort: 81
-  type: NodePort
+  type: LoadBalancer

@@ -1,0 +1,19 @@
+# frontent service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeapp-service
+  labels:
+    component: nodeapp
+  annotations:
+    kots.io/when: '{{repl ConfigOptionEquals "nodeapp_external_port_type" "Node-Port" }}'
+spec:
+  selector:
+    app: nodeapp
+    component: nodeapp
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 81
+  type: NodePort
